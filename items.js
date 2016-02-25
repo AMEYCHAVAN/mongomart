@@ -188,20 +188,21 @@ function ItemDAO(database) {
 
   this.getItem = function(itemId, callback) {
     "use strict";
+    console.log("\n\n6this.getNumSearchItems", itemId)
+    var itemId = parseInt(itemId);
 
-    /*
-     * TODO-lab3
-     *
-     * LAB #3: Query the "item" collection by _id and pass the matching item
-     * to the callback function.
-     *
-     */
+    var query = {"_id":itemId }
 
-    var item = this.createDummyItem();
+    console.log("6this.getNumSearchItems","resultquery", query)
 
-    // TODO-lab3 Replace all code above (in this method).
+    this.db.collection('item').find(query).toArray(function(err, result) {
+      assert.equal(err, null);
+      console.log("6this.getNumSearchItems","resultlength", result.length)
+      var item = result[0]
+      callback(item);
+    });
 
-    callback(item);
+
   }
 
 
