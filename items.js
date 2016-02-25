@@ -220,26 +220,31 @@ function ItemDAO(database) {
 
   this.addReview = function(itemId, comment, name, stars, callback) {
     "use strict";
+   console.log("\n\n7this.addReview", itemId, comment, name, stars)
 
-    /*
-     * TODO-lab4
-     *
-     * LAB #4: Add a review to an item document. Reviews are stored as an
-     * array value for the key "reviews". Each review has the fields: "name", "comment",
-     * "stars", and "date".
-     *
-     */
+        var reviewDoc = {
+         name: name,
+         comment: comment,
+         stars: stars,
+         date: Date.now()
+       }
 
-    var reviewDoc = {
-      name: name,
-      comment: comment,
-      stars: stars,
-      date: Date.now()
+   this.db.collection('item').updateOne({
+    "_id": itemId
+}, {
+  "$addToSet": {
+        "reviews":reviewDoc
     }
+  }
+,function(err, result) {
+     assert.equal(err, null);
+     console.log("6this.getNumSearchItems","resultlength", result)
+     var item = result
+     callback(item);
+   });
 
-    var dummyItem = this.createDummyItem();
-    dummyItem.reviews = [reviewDoc];
-    callback(dummyItem);
+    console.log("7this.addReview",reviewDoc)
+
   }
 
 

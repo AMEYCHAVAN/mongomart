@@ -78,7 +78,7 @@ MongoClient.connect('mongodb://localhost:27017/mongomart', function(err, db) {
         items.getCategories(function(categories) {
 
             items.getItems(category, page, ITEMS_PER_PAGE, function(pageItems) {
- 
+
                 items.getNumItems(category, function(itemCount) {
 
                     var numPages = 0;
@@ -133,8 +133,7 @@ MongoClient.connect('mongodb://localhost:27017/mongomart', function(err, db) {
         var itemId = parseInt(req.params.itemId);
 
         items.getItem(itemId, function(item) {
-            console.log(item);
-
+ 
             if (item == null) {
                 res.status(404).send("Item not found.");
                 return;
@@ -160,8 +159,7 @@ MongoClient.connect('mongodb://localhost:27017/mongomart', function(err, db) {
 
             items.getRelatedItems(function(relatedItems) {
 
-                console.log(relatedItems);
-                res.render("item",
+                 res.render("item",
                            {
                                userId: USERID,
                                item: item,
