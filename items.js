@@ -152,27 +152,13 @@ function ItemDAO(database) {
     "use strict";
     console.log("\n\n4this.searchItems", query, page, itemsPerPage)
 
-    /*
-     * TODO-lab2A
-     *
-     * LAB #2A: Using the value of the query parameter passed to this method, perform
-     * a text search against the item collection. Do not sort the results. Select only
-     * the items that should be displayed for a particular page. For example, on the
-     * first page, only the first itemsPerPage matching the query should be displayed.
-     * Use limit() and skip() and the method parameters: page and itemsPerPage to
-     * select the appropriate matching products. Pass these items to the callback
-     * function.
-     *
-     * You will need to create a single text index on title, slogan, and description.
-     *
-     */
+
      var query = { $text: { $search: query  } }
 
      console.log("4this.getItems","resultquery", query)
 
      this.db.collection('item').find(query).limit(itemsPerPage).skip(page * itemsPerPage).toArray(function(err, result) {
        assert.equal(err, null);
-       //   result = result.pop()
        console.log("4this.getItems","resultlength", result.length)
        var pageItems = result
        callback(pageItems);
@@ -180,17 +166,6 @@ function ItemDAO(database) {
 
 
      });
-
-    // var item = this.createDummyItem();
-    // var items = [];
-    // for (var i = 0; i < 5; i++) {
-    //   items.push(item);
-    // }
-    //
-    // // TODO-lab2A Replace all code above (in this method).
-    // console.log("4this.searchItems3", items)
-    //
-    // callback(items);
   }
 
 
@@ -202,7 +177,6 @@ function ItemDAO(database) {
 
     this.db.collection('item').find(query).toArray(function(err, result) {
       assert.equal(err, null);
-     // result = result.pop()
       console.log("5this.getNumSearchItems","numItems",result.length)
       callback(result.length);
     });
