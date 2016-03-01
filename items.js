@@ -55,7 +55,7 @@ function ItemDAO(database) {
             $sum: "$num"
           },
           category: {
-            $addToSet: {
+            $push: {
               "_id": "$_id",
               "num": "$num"
             }
@@ -151,6 +151,13 @@ function ItemDAO(database) {
   this.searchItems = function(query, page, itemsPerPage, callback) {
     "use strict";
     console.log("\n\n4this.searchItems", query, page, itemsPerPage)
+    // db.item.createIndex(
+    //    {
+    //      title: "text",
+    //      description:text",
+    //      slogan: "text"
+    //    }
+    //  )
 
 
      var query = { $text: { $search: query  } }
@@ -232,7 +239,7 @@ function ItemDAO(database) {
    this.db.collection('item').updateOne({
     "_id": itemId
 }, {
-  "$addToSet": {
+  "$push": {
         "reviews":reviewDoc
     }
   }
